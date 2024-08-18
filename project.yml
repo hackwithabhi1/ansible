@@ -1,0 +1,12 @@
+---
+ - name: manage project
+    hosts: all
+    tasks:
+       - name: install git
+          yum:
+             name: git
+             state: present
+       - name: create project directory
+          file:
+             path: /project
+             state: directory 
