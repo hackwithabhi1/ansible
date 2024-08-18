@@ -2,6 +2,10 @@
  - name: host website inside container
    hosts: node1
    tasks:
+     - name: install git
+       yum:
+         name: git
+         state: present
      - name: install docker
        yum:
          name: docker
@@ -11,5 +15,15 @@
          name: docker
          state: started
          enabled: yes
-     - name: create httpd container with default page
-       shell: docker run -dt --name=c1 -t -p 81:80 httpd 
+     - name: create project directory
+        file:
+         path: /project
+         state: directory 
+     - name: transfer docker file
+        copy:
+         src: Dockerfile
+         dest: /project/ 
+     - name: create container from docker file
+        shell: cd  /project; docker build  -t   painter . 
+     - name: launch container from painter
+        shell: docker run -dt --name=paint  -t  -p  80:80  painter
