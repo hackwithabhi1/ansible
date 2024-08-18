@@ -1,12 +1,15 @@
 ---
- - name: manage project
-    hosts: all
-    tasks:
-       - name: install git
-          yum:
-             name: git
-             state: present
-       - name: create project directory
-          file:
-             path: /project
-             state: directory 
+ - name: host website inside container
+   hosts: node1
+   tasks:
+     - name: install docker
+       yum:
+         name: docker
+         state: present
+     - name: start enable docker
+       service:
+         name: docker
+         state: started
+         enabled: yes
+     - name: create httpd container with default page
+       shell: docker run -dt --name=c1 -t -p 81:80 httpd 
