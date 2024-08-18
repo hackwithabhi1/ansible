@@ -16,14 +16,14 @@
          state: started
          enabled: yes
      - name: create project directory
-        file:
+       file:
          path: /project
-         state: directory 
+         state: directory
      - name: transfer docker file
-        copy:
+       copy:
          src: Dockerfile
-         dest: /project/ 
+         dest: /project/
      - name: create container from docker file
-        shell: cd  /project; docker build  -t   painter . 
+       shell: cd  /project; docker build  -t   painter .
      - name: launch container from painter
-        shell: docker run -dt --name=paint  -t  -p  80:80  painter
+       shell: docker run -dt --name=paint  -t  -p  80:80  painter
